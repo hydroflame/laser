@@ -9,10 +9,11 @@ import { Pages } from "./Pages";
 import LogoImg from "./logo.svg";
 
 interface IProps {
+  page: Pages;
   setPage: (page: Pages) => void;
 }
 
-export const TopBar = ({ setPage }: IProps) => {
+export const Header = ({ page, setPage }: IProps) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event: any) => {
@@ -42,7 +43,7 @@ export const TopBar = ({ setPage }: IProps) => {
             }}
           >
             <img
-              style={{ width: "50px", color: "white" }}
+              style={{ width: "50px", color: "white", fill: "white" }}
               src={LogoImg}
               alt={"ignis laser logo"}
             />
@@ -51,9 +52,6 @@ export const TopBar = ({ setPage }: IProps) => {
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
             >
@@ -77,12 +75,20 @@ export const TopBar = ({ setPage }: IProps) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {Object.values(Pages).map((page) => (
+              {Object.values(Pages).map((p) => (
                 <MenuItem
-                  key={page}
-                  onClick={() => (handleCloseNavMenu(), setPage(page))}
+                  key={p}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    setPage(p);
+                  }}
                 >
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography
+                    color={p === page ? "primary" : "disabled"}
+                    textAlign="center"
+                  >
+                    {p}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -103,19 +109,24 @@ export const TopBar = ({ setPage }: IProps) => {
             }}
           >
             <img
-              style={{ width: "50px", color: "white" }}
+              style={{ width: "50px", color: "white", fill: "white" }}
               src={LogoImg}
               alt={"ignis laser logo"}
             />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {Object.values(Pages).map((page) => (
+            {Object.values(Pages).map((p) => (
               <Button
-                key={page}
-                onClick={() => (handleCloseNavMenu(), setPage(page))}
+                key={p}
+                onClick={() => {
+                  handleCloseNavMenu();
+                  setPage(p);
+                }}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                <Typography color={p === page ? "primary" : "disabled"}>
+                  {p}
+                </Typography>
               </Button>
             ))}
           </Box>
